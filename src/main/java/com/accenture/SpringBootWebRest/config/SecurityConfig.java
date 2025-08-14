@@ -22,7 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 	
-	@Bean
+	/*@Bean
 	public SecurityFilterChain defalultSecurityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(customizer->customizer.disable());
 		//http.authorizeHttpRequests(auth->auth.antMatchers("/jobPost/**", "/jobPosts", "/load", "/hello").permitAll().anyRequest().authenticated());
@@ -30,10 +30,10 @@ public class SecurityConfig {
 		http.oauth2Login(Customizer.withDefaults());
 		
 		return http.build();		
-	}
+	}*/
  
 	
-	/*@Autowired
+	@Autowired
 	private UserDetailsService userDetailsService;
 	
 	@SuppressWarnings("deprecation")
@@ -60,7 +60,7 @@ public class SecurityConfig {
 		
 		http.sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		return http.build();
-	}*/
+	}
 	
 	/*By default,Spring Security uses UserDetailsService class in the background to check for username and password in 
 	 application.properties file.But in that case,we can have only 1 user. In order to have multiple users for our project,

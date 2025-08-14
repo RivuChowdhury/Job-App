@@ -10,13 +10,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+//Aspect Oriented Programming
 @Component
 @Aspect
 public class LoggingAspect {
 	
 	private static final Logger LOGGER= LoggerFactory.getLogger(LoggingAspect.class);
 	
-	//return type, fully-qualified-class-name.methodname(args). * means for all and .. for args means for all
+	//return type, fully-qualified-class-name.methodname(args). * means for all and .. for args inside method
 	/*'Before' is a point cut which means it is an expression used to specify when we want to advice to the call.*/
 	@Before("execution(* com.accenture.SpringBootWebRest.service.JobService.getjob(..))")
 	/*'JoinPoint' is used to get a hold(information) on the method called.e.g. here we get a hold on the getJob()
