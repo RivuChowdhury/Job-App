@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Configuration tag is the root element fo the logback.xml file and all the logback configurations is enclosed within 
+this element. -->
+<configuration>
+<!--Appender tag is used to specify the type of location where we want to print our logs like console,file etc to store the logs.   -->
+      <appender name="myConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>
+                       %d{yy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg %n
+                </pattern>
+        </encoder>
+      </appender>
+      
+      <appender name="myFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+              <encoder>
+                    <pattern>
+                       %d{yy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg %n
+                    </pattern>
+               </encoder>
+              <file>
+                   F:\\Java Projects\\Job-App\\JobApp.log
+              </file>
+      </appender>
+      
+      <!-- This root tag will be used to specify the log level that we want to store in both the console and JobApp.log file. -->
+      <root level="INFO">
+           <appender-ref ref="myConsoleAppender" />
+           <appender-ref ref="myFileAppender" />
+      </root>
+</configuration>

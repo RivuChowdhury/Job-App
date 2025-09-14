@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,8 @@ public class JobService {
 	
 	@Autowired
 	private JobRepo jobRepo;
+	
+	//private static final Logger logger=LoggerFactory.getLogger(JobService.class);
 	
 	public void addJob(JobPost jobPost) {
 		System.out.println("Saving job: " + jobPost);
