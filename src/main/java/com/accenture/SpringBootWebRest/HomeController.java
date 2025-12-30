@@ -17,10 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.accenture.SpringBootWebRest.model.JobPost;
 import com.accenture.SpringBootWebRest.service.JobService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 //@Controller
 /*If all the methods inside a controller returns data instead of view we can directly write @RestController above the 
 Controller. */
 @RestController
+@Tag(name="Home APIs")
 public class HomeController {
 	@Autowired
 	private JobService jobService;
@@ -41,11 +45,13 @@ public class HomeController {
 	}
 	
 	@GetMapping("jobPost/{postId}")
+	@Operation(summary="Get all the jobs from the database")
 	public Optional<JobPost> getjob(@PathVariable("postId") int postId) {
 		return jobService.getjob(postId);
 	}
 	
 	@PostMapping("jobPost")
+	@Operation(summary="Add jobs in the database")
 	public void addJob(@RequestBody JobPost jobPost){
 		jobService.addJob(jobPost);
 	}

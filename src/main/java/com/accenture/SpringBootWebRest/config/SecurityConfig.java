@@ -53,7 +53,11 @@ public class SecurityConfig {
 		http.csrf(customizer->customizer.disable());
 		
 		
-		http.authorizeHttpRequests(request->request.anyRequest().authenticated());
+		http.authorizeHttpRequests(request->request.antMatchers("/swagger-ui/**",
+				 "/swagger-ui.html",
+				 "/v2/api-docs",
+				 "/swagger-resources/**",
+				 "/webjars/**").permitAll().anyRequest().authenticated());
 		
 		http.httpBasic(Customizer.withDefaults());
 		
