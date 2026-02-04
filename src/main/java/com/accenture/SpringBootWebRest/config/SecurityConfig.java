@@ -23,6 +23,29 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 	
 	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+	    http.csrf(csrf -> csrf.disable());
+
+	    http.authorizeHttpRequests(auth -> auth
+	        .antMatchers(
+	            "/register",
+	            "/swagger-ui/**",
+	            "/swagger-ui.html",
+	            "/v2/api-docs",
+	            "/swagger-resources/**",
+	            "/webjars/**"
+	        ).permitAll()
+	        .anyRequest().authenticated()
+	    );
+
+	    // Use form login for user-based app
+	    http.formLogin(Customizer.withDefaults());
+
+	    return http.build();
+	}
+
+	/*@Bean
 	public SecurityFilterChain defalultSecurityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(customizer->customizer.disable());
 		//http.authorizeHttpRequests(auth->auth.antMatchers("/jobPost/**", "/jobPosts", "/load", "/hello").permitAll().anyRequest().authenticated());
@@ -32,7 +55,7 @@ public class SecurityConfig {
 		//http.oauth2Login(Customizer.withDefaults());
 		
 		return http.build();		
-	}
+	}*/
  
 	
 	@Autowired
