@@ -1,0 +1,34 @@
+version: "3.7"
+
+services:
+  app:
+    build: .
+    ports:
+      - "9080:8090"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+    depends_on:
+      - mysql
+    networks:
+      - job-network
+
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: rivu@123456
+      MYSQL_DATABASE: jobdockerdb
+      MYSQL_USER: rivuchowdhury
+      MYSQL_PASSWORD: rivu@123456
+    ports:
+      - "3307:3306"
+    networks:
+      - job-network
+    volumes:
+      - mysql-job-data:/var/lib/mysql
+
+networks:
+  job-network:
+    driver: bridge
+
+volumes:
+  mysql-job-data:
