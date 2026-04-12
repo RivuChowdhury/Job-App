@@ -4,7 +4,9 @@ package com.accenture.SpringBootWebRest.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,9 +16,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 //import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 //import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import com.accenture.SpringBootWebRest.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -29,7 +34,7 @@ public class SecurityConfig {
 
 	    http.authorizeHttpRequests(auth -> auth
 	        .antMatchers(
-	            "/register",
+	            "/register","/authenticate",
 	            "/swagger-ui/**",
 	            "/swagger-ui.html",
 	            "/v2/api-docs",
@@ -40,7 +45,9 @@ public class SecurityConfig {
 	    );
 
 	    // Use form login for user-based app
-	    http.formLogin(Customizer.withDefaults());
+	    //http.formLogin(Customizer.withDefaults());
+	    
+	    //http.httpBasic(Customizer.withDefaults());
 
 	    return http.build();
 	}
@@ -59,18 +66,24 @@ public class SecurityConfig {
  
 	
 	@Autowired
-	private UserDetailsService userDetailsService;
+	private CustomUserDetailsService userDetailsService;
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder(12);
+	}
 	
 	@SuppressWarnings("deprecation")
 	@Bean
-	public AuthenticationProvider authProvider() {
+	public AuthenticationManager authManager(CustomUserDetailsService userDetailsService,PasswordEncoder passwordEncoder) {
 		
-		DaoAuthenticationProvider provider =new DaoAuthenticationProvider();
+		DaoAuthenticationProvider provider=new DaoAuthenticationProvider();
 		
 		provider.setUserDetailsService(userDetailsService);
 		
-		provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
-		return provider;
+		provider.setPasswordEncoder(passwordEncoder);
+		
+		return new ProviderManager(provider);
 	}
 	/*@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

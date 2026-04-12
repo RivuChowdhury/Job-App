@@ -1,4 +1,4 @@
-package com.accenture.SpringBootWebRest;
+package com.accenture.SpringBootWebRest.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.accenture.SpringBootWebRest.model.JobPost;
+import com.accenture.SpringBootWebRest.entity.JobPost;
 import com.accenture.SpringBootWebRest.service.JobService;
 
 import io.swagger.v3.oas.annotations.Operation;

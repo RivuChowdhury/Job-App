@@ -6,7 +6,7 @@ import org.mockito.Mock;
 
 import com.accenture.SpringBootWebRest.repository.UserRepo;
 
-public class MyUserDetailsServiceTest {
+public class CustomUserDetailsServiceTest {
 	@Test
 	public void firstTest() {
 		System.out.println("Inside first test");
@@ -16,7 +16,7 @@ public class MyUserDetailsServiceTest {
 	private UserRepo userRepo;
 	
 	@InjectMocks
-	private MyUserDetailsService myUserDetailsService;
+	private CustomUserDetailsService customUserDetailsService;
 	
 	
 	

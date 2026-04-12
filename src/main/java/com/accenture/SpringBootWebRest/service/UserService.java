@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.accenture.SpringBootWebRest.model.User;
+import com.accenture.SpringBootWebRest.entity.User;
 import com.accenture.SpringBootWebRest.repository.UserRepo;
 
 
