@@ -20,12 +20,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 //import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.accenture.SpringBootWebRest.filter.JwtFilter;
 import com.accenture.SpringBootWebRest.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+	
+	@Autowired
+	JwtFilter jwtFilter;
 	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -47,7 +52,12 @@ public class SecurityConfig {
 	    // Use form login for user-based app
 	    //http.formLogin(Customizer.withDefaults());
 	    
+	    //Used for postman based "Basic Auth" api testing with username and password
 	    //http.httpBasic(Customizer.withDefaults());
+	    
+	    /*Here,we are adding the Jwt filter before the UsernamePasswordAuthentication so that we can make our project stateless so that username and 
+	    password is not needed every time the user logs into their account.*/
+	    http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
 	    return http.build();
 	}
