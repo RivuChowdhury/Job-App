@@ -59,6 +59,7 @@ public class SecurityConfig {
 	    password is not needed every time the user logs into their account.*/
 	    http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
+
 	    return http.build();
 	}
 
