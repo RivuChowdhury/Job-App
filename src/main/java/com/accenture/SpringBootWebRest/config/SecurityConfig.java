@@ -40,7 +40,9 @@ public class SecurityConfig {
 	    );
 
 	    // Use form login for user-based app
-	    http.formLogin(Customizer.withDefaults());
+	    //http.formLogin(Customizer.withDefaults());
+	    
+	    http.httpBasic();
 
 	    return http.build();
 	}
