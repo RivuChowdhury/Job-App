@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.accenture.SpringBootWebRest.model.User;
-import com.accenture.SpringBootWebRest.model.UserPrinciple;
+import com.accenture.SpringBootWebRest.entity.User;
+import com.accenture.SpringBootWebRest.entity.UserPrinciple;
 import com.accenture.SpringBootWebRest.repository.UserRepo;
 
 

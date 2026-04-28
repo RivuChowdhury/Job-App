@@ -13,7 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.accenture.SpringBootWebRest.model.JobPost;
+import com.accenture.SpringBootWebRest.dto.JobPost;
 import com.accenture.SpringBootWebRest.repository.JobRepo;
 
 import static org.mockito.Mockito.doNothing;

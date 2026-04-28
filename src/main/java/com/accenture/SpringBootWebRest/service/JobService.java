@@ -5,12 +5,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.accenture.SpringBootWebRest.model.JobPost;
+import com.accenture.SpringBootWebRest.dto.JobPostDTO;
+import com.accenture.SpringBootWebRest.entity.JobPost;
 import com.accenture.SpringBootWebRest.repository.JobRepo;
 
 
@@ -20,29 +22,44 @@ public class JobService {
 	@Autowired
 	private JobRepo jobRepo;
 	
+	@Autowired
+	private ModelMapper modelMapper;
+	
 	//private static final Logger logger=LoggerFactory.getLogger(JobService.class);
 	
-	public void addJob(JobPost jobPost) {
-		System.out.println("Saving job: " + jobPost);
+	public void addJob(JobPostDTO jobPostDTO) {
+		JobPost jobPost=modelMapper.map(jobPostDTO, JobPost.class);
 		jobRepo.save(jobPost);		
 	}
 	
-	public List<JobPost> getAllJobs(){
-		return jobRepo.findAll();
+	public List<JobPostDTO> getAllJobs(){
+		List<JobPost> jobPost=jobRepo.findAll();
+		JobPostDTO[] jobPostModelMap=modelMapper.map(jobPost, JobPostDTO[].class);
+		List<JobPostDTO> allJobPostDto=Arrays.asList(jobPostModelMap);
+		return allJobPostDto;
 	}
 	
-	public Optional<JobPost> getjob(int postId) {
-		//int num=10/0;
-		return jobRepo.findById(postId);
+	public JobPostDTO getjobById(int postId) {
+		JobPost jobPost=jobRepo.findById(postId).orElse(null);
+		JobPostDTO jobPostDto=modelMapper.map(jobPost,JobPostDTO.class);
+		return jobPostDto;
 	}
 	
-	public void updateJob(JobPost jobPost) {
-		System.out.println("Updating job: " + jobPost);
+	public JobPostDTO updateJob(JobPostDTO jobPostDTO) {
+		JobPost jobPost=modelMapper.map(jobPostDTO, JobPost.class);
 		jobRepo.save(jobPost);
+		return jobPostDTO;
 	}
 	
 	public void deleteJob(int postId) {
 		jobRepo.deleteById(postId);
+	}
+	
+	public List<JobPostDTO> search(String keyword) {
+		List<JobPost> foundSimilarJobPost=jobRepo.findByPostProfileContainingOrPostDescContaining(keyword, keyword);
+		JobPostDTO[] jobPostModelMap=modelMapper.map(foundSimilarJobPost,JobPostDTO[].class); 
+		List<JobPostDTO> foundSimilarJobPostDto=Arrays.asList(jobPostModelMap);
+		return foundSimilarJobPostDto;
 	}
 
 	public void load() {
@@ -66,8 +83,6 @@ public class JobService {
 		
 	}
 
-	public List<JobPost> search(String keyword) {
-		return jobRepo.findByPostProfileContainingOrPostDescContaining(keyword, keyword);
-	}
+	
 
 }
