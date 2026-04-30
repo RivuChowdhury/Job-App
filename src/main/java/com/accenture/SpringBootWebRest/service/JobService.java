@@ -27,9 +27,10 @@ public class JobService {
 	
 	//private static final Logger logger=LoggerFactory.getLogger(JobService.class);
 	
-	public void addJob(JobPostDTO jobPostDTO) {
+	public JobPostDTO addJob(JobPostDTO jobPostDTO) {
 		JobPost jobPost=modelMapper.map(jobPostDTO, JobPost.class);
 		jobRepo.save(jobPost);		
+		return modelMapper.map(jobPost,JobPostDTO.class);
 	}
 	
 	public List<JobPostDTO> getAllJobs(){
@@ -39,16 +40,21 @@ public class JobService {
 		return allJobPostDto;
 	}
 	
-	public JobPostDTO getjobById(int postId) {
-		JobPost jobPost=jobRepo.findById(postId).orElse(null);
-		JobPostDTO jobPostDto=modelMapper.map(jobPost,JobPostDTO.class);
-		return jobPostDto;
+	public Optional<JobPostDTO> getjobById(int postId) {
+	    Optional<JobPost> jobPost = jobRepo.findById(postId);
+	    if (jobPost.isPresent()) {
+	        JobPostDTO jobPostDto = modelMapper.map(jobPost.get(), JobPostDTO.class);
+	        return Optional.of(jobPostDto);
+	    }
+	    return Optional.empty();
 	}
 	
-	public JobPostDTO updateJob(JobPostDTO jobPostDTO) {
+	public JobPostDTO updateJob(JobPostDTO jobPostDTO,int postId) throws Exception {
+		JobPost existingJobPost=jobRepo.findById(postId).orElseThrow(() -> new RuntimeException("Job Post Not found"));
 		JobPost jobPost=modelMapper.map(jobPostDTO, JobPost.class);
-		jobRepo.save(jobPost);
-		return jobPostDTO;
+		JobPost savedJobPost=jobRepo.save(jobPost);
+		return modelMapper.map(savedJobPost, JobPostDTO.class);
+
 	}
 	
 	public void deleteJob(int postId) {

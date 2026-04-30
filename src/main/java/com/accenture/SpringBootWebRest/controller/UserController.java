@@ -1,5 +1,7 @@
 package com.accenture.SpringBootWebRest.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +23,7 @@ public class UserController {
 	UserService userService;
 	@PostMapping("register")
 	@Operation(summary="Login users into the Job App")
-	public ResponseEntity<String> register(@RequestBody UserDTO user) {
+	public ResponseEntity<String> register(@Valid @RequestBody UserDTO user) {
 		String response= userService.save(user);	
 		return ResponseEntity.ok(response);
 	}

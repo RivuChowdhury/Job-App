@@ -1,6 +1,5 @@
 package com.accenture.SpringBootWebRest.dto;
 
-import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,6 +12,7 @@ public class UserDTO {
 	private String username;
 	
 	//This will make sure that we can only create or update password but can't fetch the password from DB for safety purposes.
+	@NotBlank
 	@JsonProperty(value="password",access=JsonProperty.Access.WRITE_ONLY)
 	private String password;
 	

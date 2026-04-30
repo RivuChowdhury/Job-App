@@ -13,7 +13,7 @@ import com.accenture.SpringBootWebRest.repository.UserRepo;
 
 @Service
 public class MyUserDetailsService implements UserDetailsService{
-
+	
 	@Autowired
 	private UserRepo userRepo;
 	@Override

@@ -3,6 +3,8 @@ package com.accenture.SpringBootWebRest.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,21 +46,24 @@ public class JobController {
 	
 	@GetMapping("jobPost/{postId}")
 	@Operation(summary="Get all the jobs from the database")
-	public ResponseEntity<JobPostDTO> getjobById(@PathVariable("postId") int postId) {
-		JobPostDTO jobPostDto=jobService.getjobById(postId);
-		return ResponseEntity.status(HttpStatus.OK).body(jobPostDto);
+	public ResponseEntity<Optional<JobPostDTO>> getjobById(@PathVariable("postId") int postId) {
+		Optional<JobPostDTO> jobPostDto=jobService.getjobById(postId);
+		if(jobPostDto.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.OK).body(jobPostDto);
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 	
 	@PostMapping("jobPost")
 	@Operation(summary="Add jobs in the database")
-	public ResponseEntity<String> addJob(@RequestBody JobPostDTO jobPostDto){
-		jobService.addJob(jobPostDto);
-		return ResponseEntity.ok("Job post created successfully");
+	public ResponseEntity<JobPostDTO> addJob(@Valid @RequestBody JobPostDTO jobPostDto){
+		JobPostDTO addedJobPostDto=jobService.addJob(jobPostDto);
+		return ResponseEntity.ok(addedJobPostDto);
 	}
 	
 	@PutMapping("jobPost/{postId}")
-	public ResponseEntity<JobPostDTO> updateJob(@RequestBody JobPostDTO jobPostDto,@PathVariable("postId") int userId) {
-		JobPostDTO updatedJobPostDto=jobService.updateJob(jobPostDto);
+	public ResponseEntity<JobPostDTO> updateJob(@Valid @RequestBody JobPostDTO jobPostDto,@PathVariable("postId") int postId) throws Exception {
+		JobPostDTO updatedJobPostDto=jobService.updateJob(jobPostDto,postId);
 		return ResponseEntity.status(HttpStatus.OK).body(updatedJobPostDto);
 	}
 	
