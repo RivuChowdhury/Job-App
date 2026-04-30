@@ -3,6 +3,7 @@ package com.accenture.SpringBootWebRest.entity;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,8 +20,11 @@ public class User implements UserDetails{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	@Column(nullable=false)
 	private String username;
+	@Column(nullable=false)
 	private String password;
+	
 	private String role;
 	
 	public String getRole() {
@@ -47,6 +51,7 @@ public class User implements UserDetails{
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	
 	@Override
 	public String toString() {
@@ -77,6 +82,5 @@ public class User implements UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
-	
 	
 }

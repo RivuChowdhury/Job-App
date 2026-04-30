@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import com.accenture.SpringBootWebRest.entity.JobPost;
 
-
 @Repository
 public interface JobRepo extends JpaRepository<JobPost,Integer> {
     List<JobPost> findByPostProfileContainingOrPostDescContaining(String postProfile,String postDesc);

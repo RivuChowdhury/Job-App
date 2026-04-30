@@ -1,4 +1,4 @@
-package com.accenture.SpringBootWebRest.entity;
+package com.accenture.SpringBootWebRest.dto;
 
 import org.springframework.stereotype.Component;
 
