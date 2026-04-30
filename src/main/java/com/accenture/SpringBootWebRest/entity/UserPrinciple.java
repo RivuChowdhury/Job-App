@@ -1,4 +1,4 @@
-package com.accenture.SpringBootWebRest.model;
+package com.accenture.SpringBootWebRest.entity;
 
 import java.util.Collection;
 import java.util.Collections;
