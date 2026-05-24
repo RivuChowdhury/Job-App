@@ -1,4 +1,4 @@
-package com.accenture.SpringBootWebRest;
+package com.accenture.SpringBootWebRest.aop;
 
 import javax.annotation.PostConstruct;
 

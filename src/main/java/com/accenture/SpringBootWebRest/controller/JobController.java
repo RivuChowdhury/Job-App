@@ -72,7 +72,7 @@ public class JobController {
 		jobService.deleteJob(postId);
 		return ResponseEntity.ok("Job deleted successfully");
 	}
-	
+
 	@PostMapping("load")
 	public String loadData() {
 		jobService.load();

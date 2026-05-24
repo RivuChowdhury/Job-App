@@ -15,7 +15,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 
-
 @RestController
 @Tag(name="User APIs", description="Register users using Spring Security")
 public class UserController {

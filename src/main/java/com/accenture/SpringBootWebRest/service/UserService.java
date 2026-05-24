@@ -20,7 +20,7 @@ public class UserService {
 	
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	private static final Logger logger=LoggerFactory.getLogger(UserService.class);
 	private BCryptPasswordEncoder encoder=new BCryptPasswordEncoder(12); //12 indicates the number of turns the password will be encrypted. 
 	public String save(UserDTO userDTO) {
@@ -39,6 +39,7 @@ public class UserService {
 		}
 		user.setPassword(encoder.encode(user.getPassword()));
 		System.out.println(user.getPassword());
+		user.setRole("ROLE_USER");
 		userRepo.save(user);
 		return "User saved successfully";
 		/*try {

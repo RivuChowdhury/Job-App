@@ -16,6 +16,8 @@ import com.accenture.SpringBootWebRest.entity.JobPost;
 import com.accenture.SpringBootWebRest.repository.JobRepo;
 
 
+
+
 @Service
 public class JobService {
 	
