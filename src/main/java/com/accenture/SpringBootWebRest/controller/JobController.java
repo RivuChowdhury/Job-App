@@ -48,7 +48,7 @@ public class JobController {
 	@Operation(summary="Get all the jobs from the database")
 	public ResponseEntity<Optional<JobPostDTO>> getjobById(@PathVariable("postId") int postId) {
 		Optional<JobPostDTO> jobPostDto=jobService.getjobById(postId);
-		if(jobPostDto.isEmpty()) {
+		if(!jobPostDto.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.OK).body(jobPostDto);
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
