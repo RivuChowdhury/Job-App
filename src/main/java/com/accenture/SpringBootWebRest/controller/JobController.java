@@ -3,7 +3,7 @@ package com.accenture.SpringBootWebRest.controller;
 import java.util.List;
 import java.util.Optional;
 
-import javax.validation.Valid;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +23,7 @@ import com.accenture.SpringBootWebRest.service.JobService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 //@Controller
 /*If all the methods inside a controller returns data instead of view we can directly write @RestController above the 
@@ -48,7 +49,7 @@ public class JobController {
 	@Operation(summary="Get all the jobs from the database")
 	public ResponseEntity<Optional<JobPostDTO>> getjobById(@PathVariable("postId") int postId) {
 		Optional<JobPostDTO> jobPostDto=jobService.getjobById(postId);
-		if(jobPostDto.isEmpty()) {
+		if(!jobPostDto.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.OK).body(jobPostDto);
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
