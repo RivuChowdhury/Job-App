@@ -2,12 +2,12 @@ package com.accenture.SpringBootWebRest.dto;
 
 import java.util.List;
 
-import javax.persistence.ElementCollection;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Positive;
+
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 
 public class JobPostDTO {
 	

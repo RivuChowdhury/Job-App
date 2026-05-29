@@ -1,29 +1,42 @@
 package com.accenture.SpringBootWebRest.entity;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 @Entity
 @Table(name="users")
 public class User implements UserDetails{
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int userId;
+	
 	@Column(nullable=false)
 	private String username;
+	
 	@Column(nullable=false)
 	private String password;
+	
+	private String fullName;
+	
+	private LocalDateTime createdAt;
+	
+	private LocalDateTime lastLoginAt;
+	
 	
 	private String role;
 	
@@ -34,10 +47,10 @@ public class User implements UserDetails{
 		this.role = role;
 	}
 	public int getId() {
-		return id;
+		return userId;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setId(int userId) {
+		this.userId = userId;
 	}
 	public String getUsername() {
 		return username;
@@ -53,10 +66,6 @@ public class User implements UserDetails{
 	}
 
 	
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role + "]";
-	}
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub

@@ -38,7 +38,7 @@ public class SecurityConfig {
 	    http.csrf(csrf -> csrf.disable());
 
 	    http.authorizeHttpRequests(auth -> auth
-	        .antMatchers(
+	        .requestMatchers(
 	            "/register","/authenticate",
 	            "/swagger-ui/**",
 	            "/swagger-ui.html",

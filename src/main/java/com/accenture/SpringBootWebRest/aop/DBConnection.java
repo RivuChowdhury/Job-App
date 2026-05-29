@@ -1,12 +1,14 @@
 package com.accenture.SpringBootWebRest.aop;
 
-import javax.annotation.PostConstruct;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
+
+import jakarta.annotation.PostConstruct;
 
 @Component
 /*Profile annotation is used to tell the Spring Boot to create a bean only when a particular profile is set. For example,

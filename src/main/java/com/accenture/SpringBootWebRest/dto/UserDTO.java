@@ -1,8 +1,10 @@
 package com.accenture.SpringBootWebRest.dto;
 
-import javax.validation.constraints.NotBlank;
+
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.validation.constraints.NotBlank;
 
 public class UserDTO {	
 
