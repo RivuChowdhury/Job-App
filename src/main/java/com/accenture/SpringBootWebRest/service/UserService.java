@@ -24,31 +24,25 @@ public class UserService {
 	private static final Logger logger=LoggerFactory.getLogger(UserService.class);
 	private BCryptPasswordEncoder encoder=new BCryptPasswordEncoder(12); //12 indicates the number of turns the password will be encrypted. 
 	public String save(UserDTO userDTO) {
-		User user=modelMapper.map(userDTO, User.class);
-		/*Here, we are encrypting the password given by the User .Hence, we are using getPassword to get the password and using
-		 encoder to encode the password and set that encoded password as the new password in the database.*/
-		if(userRepo.existsByUsername(userDTO.getUsername())) {
-			/*By default SpringBoot has info,warn and error as the logging levels.To user debug and trace we need to configure
-			 them in the logback.xml file.*/
-			logger.info("Infoooooooooooooooo");
-			logger.warn("Warnnnnnnnnnnnnnnnn");
-			logger.error("Error occured for {}",userDTO.getUsername());//Unlike System.out.println(),in Logger we are using ,(comma) instead of +(concatenation).
-			logger.debug("Debugggggggggggggg");
-			logger.trace("Traceeeeeeeeeeeeee");
-			throw new RuntimeException("User with username "+ userDTO.getUsername()+" already exists");
+		String baseUsername=userDTO.getFullName().trim().toLowerCase().replace(" ",".");
+		String actualUsername=baseUsername;
+
+		int count=0;
+		if(userRepo.existsByUsername(actualUsername)) {
+			logger.warn("Username '{}' already exists",baseUsername);			
+			while(userRepo.existsByUsername(actualUsername)) {
+				count++;
+				actualUsername=baseUsername+"."+count;
+			}
+			logger.info("Created '{}' for the new user",actualUsername);
 		}
+		
+		User user=modelMapper.map(userDTO, User.class);
+		user.setUsername(actualUsername);
 		user.setPassword(encoder.encode(user.getPassword()));
 		System.out.println(user.getPassword());
-		user.setRole("ROLE_USER");
 		userRepo.save(user);
 		return "User saved successfully";
-		/*try {
-			return userRepo.save(user);
-		}
-		catch(Exception e) {
-			System.out.println(e);
-			throw new RuntimeException("User with ID " + user.getId() + " already exists.");
-		}*/
 	}
 
 }
