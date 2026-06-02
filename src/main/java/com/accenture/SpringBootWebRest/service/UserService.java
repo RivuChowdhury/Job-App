@@ -1,5 +1,7 @@
 package com.accenture.SpringBootWebRest.service;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,17 +27,24 @@ public class UserService {
 	private BCryptPasswordEncoder encoder=new BCryptPasswordEncoder(12); //12 indicates the number of turns the password will be encrypted. 
 	public String save(UserDTO userDTO) {
 		String baseUsername=userDTO.getFullName().trim().toLowerCase().replace(" ",".");
-		String actualUsername=baseUsername;
+		List<String> takenUsername=userRepo.findSimilarUsernames(baseUsername);
+		String actualUsername;
 
-		int count=0;
-		if(userRepo.existsByUsername(actualUsername)) {
-			logger.warn("Username '{}' already exists",baseUsername);			
-			while(userRepo.existsByUsername(actualUsername)) {
-				count++;
-				actualUsername=baseUsername+"."+count;
-			}
-			logger.info("Created '{}' for the new user",actualUsername);
+		if(takenUsername.isEmpty()) {
+			actualUsername=baseUsername;
 		}
+		else {
+			int count=1;
+			StringBuffer sb=new StringBuffer(baseUsername+"."+count);
+			while(takenUsername.contains(sb.toString())) {
+				sb.deleteCharAt(sb.length()-1);
+				count++;
+				sb.append(count);
+			}
+			actualUsername=sb.toString();
+		}
+		
+		logger.info("Created '{}' for the new user",actualUsername);
 		
 		User user=modelMapper.map(userDTO, User.class);
 		user.setUsername(actualUsername);
