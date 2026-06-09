@@ -1,5 +1,6 @@
 package com.accenture.SpringBootWebRest.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -49,6 +50,7 @@ public class UserService {
 		User user=modelMapper.map(userDTO, User.class);
 		user.setUsername(actualUsername);
 		user.setPassword(encoder.encode(user.getPassword()));
+		user.setCreatedAt(LocalDateTime.now());
 		System.out.println(user.getPassword());
 		userRepo.save(user);
 		return "User saved successfully";

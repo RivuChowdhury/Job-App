@@ -11,11 +11,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
@@ -50,7 +53,12 @@ public class User implements UserDetails{
 	
 	@Column(nullable=false,unique=true)
 	private UUID profileId;
-		
+	
+	@OneToOne(mappedBy="user", cascade=CascadeType.ALL, orphanRemoval=true)
+	private UserProfile userProfile;
+	
+	@OneToOne(mappedBy="user", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
+	private Recruiter recruiter;
 	
 	public User() {
 		this.profileId=UUID.randomUUID();
@@ -59,6 +67,18 @@ public class User implements UserDetails{
 	public UUID getProfileId() {
 		return profileId;
 	}
+	public Recruiter getRecruiter() {
+		return recruiter;
+	}
+
+	public void setRecruiter(Recruiter recruiter) {
+		this.recruiter = recruiter;
+	}
+
+	public void setProfileId(UUID profileId) {
+		this.profileId = profileId;
+	}
+	
 	public String getUsername() {
 		return username;
 	}

@@ -28,8 +28,6 @@ public class UserDTO {
 	@JsonProperty(value="DOB")
 	private LocalDate dateOfBirth;
 	
-	@JsonProperty(value="created_at")
-	private LocalDateTime createdAt;
 	
 	@JsonProperty(value="last_login_at")
 	private LocalDateTime lastLoginAt;
@@ -68,14 +66,6 @@ public class UserDTO {
 
 	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
-	}
-
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
 	}
 
 	public LocalDateTime getLastLoginAt() {
