@@ -1,12 +1,15 @@
 package com.accenture.SpringBootWebRest.entity;
 
+import java.util.List;
 import java.util.UUID;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -28,6 +31,18 @@ public class Recruiter {
 	
 	@Column(name="company_website")
 	private String companyWebsite;
+	
+	@OneToMany(mappedBy="recruiter",cascade=CascadeType.ALL, orphanRemoval=true)
+	private List<JobPost> jobPosts;
+	
+	
+	public List<JobPost> getJobPosts() {
+		return jobPosts;
+	}
+
+	public void setJobPosts(List<JobPost> jobPosts) {
+		this.jobPosts = jobPosts;
+	}
 
 	public UUID getRecruiterId() {
 		return recruiterId;
@@ -52,13 +67,14 @@ public class Recruiter {
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
-
-	public String getCompany_website() {
+	
+	public String getCompanyWebsite() {
 		return companyWebsite;
 	}
 
-	public void setCompany_website(String companyWebsite) {
+	public void setCompanyWebsite(String companyWebsite) {
 		this.companyWebsite = companyWebsite;
 	}
+
 
 }

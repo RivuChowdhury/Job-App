@@ -2,6 +2,7 @@ package com.accenture.SpringBootWebRest.repository;
 
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -9,8 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.accenture.SpringBootWebRest.entity.JobPost;
 
 @Repository
-public interface JobRepo extends JpaRepository<JobPost,Integer> {
-    List<JobPost> findByPostProfileContainingOrPostDescContaining(String postProfile,String postDesc);
+public interface JobPostRepo extends JpaRepository<JobPost,UUID> {
+    List<JobPost> findByTitleContainingOrDescriptionContaining(String title,String description);
 }
 
 

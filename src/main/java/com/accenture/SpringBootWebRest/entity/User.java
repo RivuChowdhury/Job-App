@@ -54,7 +54,7 @@ public class User implements UserDetails{
 	@Column(nullable=false,unique=true)
 	private UUID profileId;
 	
-	@OneToOne(mappedBy="user", cascade=CascadeType.ALL, orphanRemoval=true)
+	@OneToOne(mappedBy="user", cascade=CascadeType.ALL, orphanRemoval=true,fetch=FetchType.LAZY)
 	private UserProfile userProfile;
 	
 	@OneToOne(mappedBy="user", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)

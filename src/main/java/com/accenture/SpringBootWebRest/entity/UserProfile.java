@@ -6,11 +6,13 @@ import java.util.UUID;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -20,7 +22,7 @@ import jakarta.persistence.Table;
 public class UserProfile {
 	@Id
 	@Column(name="user_profile_id")
-	private UUID profileId;
+	private UUID userProfileId;
 	
 	@OneToOne
 	@MapsId    // Derives PK of this UserProfile table from User.profileId in the User table
@@ -51,6 +53,16 @@ public class UserProfile {
 	
 	@Column(name="resume_url")
 	private String resumeURL;
+	
+	@OneToMany(mappedBy="userProfile",cascade=CascadeType.ALL, orphanRemoval=true)
+	private List<JobApplication> jobApplications;
+	
+	public List<JobApplication> getJobApplications() {
+		return jobApplications;
+	}
+	public void setJobApplications(List<JobApplication> jobApplications) {
+		this.jobApplications = jobApplications;
+	}
 		
 	public User getUser() {
 		return user;
@@ -58,11 +70,11 @@ public class UserProfile {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public UUID getProfileId() {
-		return profileId;
+	public UUID getUserProfileId() {
+		return userProfileId;
 	}
-	public void setProfileId(UUID profileId) {
-		this.profileId = profileId;
+	public void setUserProfileId(UUID userProfileId) {
+		this.userProfileId = userProfileId;
 	}
 	public String getDomain() {
 		return domain;

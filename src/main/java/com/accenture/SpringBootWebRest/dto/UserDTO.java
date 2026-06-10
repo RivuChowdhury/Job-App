@@ -34,7 +34,6 @@ public class UserDTO {
 	
 	@JsonProperty(value="role")
 	private String role;
-	
 
 	public String getEmail() {
 		return email;
@@ -83,7 +82,6 @@ public class UserDTO {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	
 	
 
 }
