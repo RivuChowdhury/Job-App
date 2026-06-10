@@ -2,10 +2,7 @@ package com.accenture.SpringBootWebRest.filter;
 
 import java.io.IOException;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +14,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.accenture.SpringBootWebRest.service.CustomUserDetailsService;
 import com.accenture.SpringBootWebRest.service.JwtService;
+
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /*After generating the jwt token, now we need to validate that Jwt token sent by the user. In order to do that, we need to first remove the http basic 
 authentication by deleting the line http.httpBasic(Customizer.withDefaults()); from the securityFilterChain method inside the Security.config file. Now, by 

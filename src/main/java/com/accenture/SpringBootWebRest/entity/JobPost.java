@@ -1,71 +1,208 @@
 package com.accenture.SpringBootWebRest.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.Positive;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
-import org.springframework.stereotype.Component;
+import com.accenture.SpringBootWebRest.entity.enums.EmployeementType;
+import com.accenture.SpringBootWebRest.entity.enums.JobPostStatus;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Positive;
 
 @Entity
+@Table(name="job_post")
 public class JobPost {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int postId;
+	@GeneratedValue(strategy = GenerationType.UUID)
+	@Column(name="job_post_id")
+	private UUID jobPostId;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="recruiter_id",referencedColumnName="recruiter_id",nullable=false) /*Here, name="recruiter_id" represents foreign key in 
+	                                                                                    job_post table and the referencedColumnName="recruiter_id" 
+	                                                                                    represents primary key in recruiter table. */
+	private Recruiter recruiter;
+
 	@Column(nullable=false)
-	private String postProfile;
+	private String title;
+	
+	@Column(columnDefinition="TEXT")
+	private String description;
+	
 	@Column(nullable=false)
-	private String postDesc;
+	private String location;
+	
+	@Column(nullable=false,name="employment_type")
+	@Enumerated(EnumType.STRING)
+	private EmployeementType employeementType;
+	
+	@Column(nullable=false)
+	private String domain;
+	
 	@Positive
+	@Column(nullable=false,name="required_experience")
 	private int reqExperience;
-	@ElementCollection
-	private List<String> postTechStack;
 	
-	public JobPost() {}
+	@JdbcTypeCode(SqlTypes.JSON)
+	@Column(nullable=false,name="required_skills",columnDefinition="jsonb")
+	private List<String> reqSkills;
 	
-	public JobPost(int postId, String postProfile, String postDesc, int reqExperience, List<String> postTechStack) {
-		super();		
-		this.postProfile = postProfile;
-		this.postDesc = postDesc;
-		this.reqExperience = reqExperience;
-		this.postTechStack = postTechStack;
-		//this.postId = postId;
-	}
-	public int getPostId() {
-	    return postId;
-	}
-	public void setPostId(int postId) {
-	    this.postId = postId;
+	@Positive
+	@Column(nullable=false,name="min_salary")
+	private int minSalary;
+	
+	@Positive
+	@Column(nullable=false,name="max_salary")
+	private int maxSalary;
+	
+	@Column(nullable=false,name="job_post_status")
+	@Enumerated(EnumType.STRING)
+	private JobPostStatus jobPostStatus;
+	
+	@Column(nullable=false,name="job_posted_at")
+	private LocalDateTime jobPostedAt;
+	
+	@Column(nullable=false)
+	private LocalDateTime deadline;
+	
+	@OneToMany(mappedBy="jobPost",cascade=CascadeType.ALL, orphanRemoval=true)
+	private List<JobApplication> jobApplications;
+	
+	public List<JobApplication> getJobApplications() {
+		return jobApplications;
 	}
 
-	public String getPostProfile() {
-		return postProfile;
+	public void setJobApplications(List<JobApplication> jobApplications) {
+		this.jobApplications = jobApplications;
 	}
-	public void setPostProfile(String postProfile) {
-		this.postProfile = postProfile;
+
+	public UUID getJobPostId() {
+		return jobPostId;
 	}
-	public String getPostDesc() {
-		return postDesc;
+
+	public void setJobPostId(UUID jobPostId) {
+		this.jobPostId = jobPostId;
 	}
-	public void setPostDesc(String postDesc) {
-		this.postDesc = postDesc;
+
+	public Recruiter getRecruiter() {
+		return recruiter;
 	}
+
+	public void setRecruiter(Recruiter recruiter) {
+		this.recruiter = recruiter;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public EmployeementType getEmployeementType() {
+		return employeementType;
+	}
+
+	public void setEmployeementType(EmployeementType employeementType) {
+		this.employeementType = employeementType;
+	}
+
+	public String getDomain() {
+		return domain;
+	}
+
+	public void setDomain(String domain) {
+		this.domain = domain;
+	}
+
 	public int getReqExperience() {
 		return reqExperience;
 	}
+
 	public void setReqExperience(int reqExperience) {
 		this.reqExperience = reqExperience;
 	}
-	public List<String> getPostTechStack() {
-		return postTechStack;
+
+	public List<String> getReqSkills() {
+		return reqSkills;
 	}
-	public void setPostTechStack(List<String> postTechStack) {
-		this.postTechStack = postTechStack;
+
+	public void setReqSkills(List<String> reqSkills) {
+		this.reqSkills = reqSkills;
 	}
+
+	public int getMinSalary() {
+		return minSalary;
+	}
+
+	public void setMinSalary(int minSalary) {
+		this.minSalary = minSalary;
+	}
+
+	public int getMaxSalary() {
+		return maxSalary;
+	}
+
+	public void setMaxSalary(int maxSalary) {
+		this.maxSalary = maxSalary;
+	}
+
+	public JobPostStatus getJobPostStatus() {
+		return jobPostStatus;
+	}
+
+	public void setJobPostStatus(JobPostStatus jobPostStatus) {
+		this.jobPostStatus = jobPostStatus;
+	}
+
+	public LocalDateTime getJobPostedAt() {
+		return jobPostedAt;
+	}
+
+	public void setJobPostedAt(LocalDateTime jobPostedAt) {
+		this.jobPostedAt = jobPostedAt;
+	}
+
+	public LocalDateTime getDeadline() {
+		return deadline;
+	}
+
+	public void setDeadline(LocalDateTime deadline) {
+		this.deadline = deadline;
+	}
+		
 
 }
